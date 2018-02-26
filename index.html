@@ -1,30 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Title</title>
+    <title>Type Hinty Pythonowe w produkcji - czy warto?</title>
     <meta charset="utf-8">
-    <style>
-      @font-face{
-        font-family: 'Droid Serif';
-        src: url('fonts/DroidSerif-Regular.ttf');
-      }
-      @font-face{
-        font-family: 'Yanone Kaffeesatz';
-        src: url('fonts/YanoneKaffeesatz-Regular.ttf');
-      }
-      @font-face{
-        font-family: 'Ubuntu Mono';
-        src: url('fonts/UbuntuMono-Regular.ttf');
-      }
-
-      body { font-family: 'Droid Serif'; }
-      h1, h2, h3 {
-        font-family: 'Yanone Kaffeesatz';
-        font-weight: normal;
-      }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-    </style>
-    <link type="text/css" href="alle.css" rel="stylesheet">
+    <link type="text/css" href="static/alle.css" rel="stylesheet">
   </head>
   <body>
     <textarea id="source">
@@ -32,37 +11,489 @@
 class: center, middle, title-slide
 count: false
 
-# Title
+# Type Hinty Pythonowe w produkcji<br />czy warto?
+
+.footnote[Marek Bleschke]
 
 ---
 
-class: with-title
+class: with-title large-font
 
 # Agenda
 
-1. Introduction
-2. Deep-dive
-3. ...
+--
+
+1. Kilka słów o type hintach
+
+--
+
+2. Co internet myśli o type hintach
+
+--
+
+3. Co my myślimy o type hintach
+
+--
+
+4. Dlaczego warto używać
+
+--
+
+5. Gdzie nas boli
+
+--
+
+6. Kilka słów podsumowania
+
+--
+
+7. Q & A
 
 ---
 
-class: with-title
+class: with-title mid-font
 
-# Introduction
+# Kilka słów o type hintach
+
+--
+
+#### PEP 3107 - Function Annotations
+- Stworzony 12.2006
+
+- Dostępne od wersji Python 3.0
+
+???
+
+PEP 3107
+- składnia dla adnotacji funkcji bez określonej semantyki
+
+PEP 484
+- nie zabrania przed użyciem adnotacji do innych celów niż type hinting
+
+Type hinty są również dostępne dla Pythona 2 przez komentarze lub stub file.
+
+--
+
+#### mypy
+- Stworzony 12.2012
+
+- Eksperymentalne, opcjonalne narzędzie do sprawdzania typów
+
+--
+
+#### PEP 484 - Type Hints
+
+- Stworzony 09.2014
+
+- Dostępne od wersji Python 3.5
 
 ---
+class: with-title mid-font
 
-class: with-title
+# PEP 484
 
-# Code
-```python
-import os
+--
 
-print('TEST')
+Ma na celu zapewnienie standardu składni dla adnotacji typów w funkcjach pozwalając na:
+
+
+- łatwiejszą <b>statyczną analizę</b> i refaktoryzację kodu
+
+- sprawdzanie typów podczas runtime'u
+
+- generowanie kodu na podstawie informacji o typach
+
+???
+This PEP aims to provide a standard syntax for type annotations, opening up Python code to easier static analysis and refactoring, potential runtime type checking, and (perhaps, in some contexts) code generation utilizing type information.
+
+<b>Of these goals, static analysis is the most important.</b> This includes support for off-line type checkers such as mypy, as well as providing a standard notation that can be used by IDEs for code completion and refactoring.
+
+It should also be emphasized that <b>Python will remain a dynamically typed language, and the authors have no desire to ever make type hints mandatory, even by convention.</b>
+
+--
+
+<b>Python pozostanie językiem dynamicznie typowanym, type hinty nie będą wymagane nawet przez konwencję.</b>
+
+--
+
+```
+def greeting(name: str = 'World') -> str:
+    return 'Hello ' + name
 ```
 
+---
+
+class: with-title
+background-image: url(/static/img/love-hate.jpg)
+
+# Co internet myśli o type hintach
+
+---
+
+class: with-title
+name: survey
+background-image: url(/static/img/todo.jpg)
+
+# Co my myślimy o type hintach
+
+---
+
+class: with-title
+
+# Co my myślimy o type hintach
+
+### Czy używałaś / używałeś type hintów?
+
+.center[![Question 1](/static/img/questions/question_1.jpg)]
+
+---
+
+class: with-title
+
+# Co my myślimy o type hintach
+
+### Czy uważasz, że type hinty pomagają wyłapywać błędy?
+
+.center[![Question 1](/static/img/questions/question_2.jpg)]
+
+---
+
+class: with-title
+
+# Co my myślimy o type hintach
+
+### Czy uważasz, że type hinty zwiększają czytelność kodu?
+
+.center[![Question 1](/static/img/questions/question_3.jpg)]
+
+---
+
+class: with-title
+
+# Co my myślimy o type hintach
+
+### Czy uważasz, że używanie type hintów sprawia, że piszesz lepszy kod? (Bardziej przemyślany, łatwiej utrzymywalny etc.)
+
+.center[![Question 1](/static/img/questions/question_4.jpg)]
+
+---
+
+class: with-title
+
+# Co my myślimy o type hintach
+
+### Czy uważasz, że format zapisu type hintów jest dobry?
+
+.center[![Question 1](/static/img/questions/question_5.jpg)]
+
+---
+
+class: with-title
+
+# Co my myślimy o type hintach
+
+### Czy uważasz, że dodanie type hintów do pythona to dobry pomysł?
+
+.center[![Question 1](/static/img/questions/question_6.jpg)]
+
+---
+
+class: with-title
+
+# Co my myślimy o type hintach
+
+### Jak bardzo lubisz statyczne typowanie w językach programowania?
+
+.center[![Question 1](/static/img/questions/question_7.jpg)]
+
+---
+
+class: with-title mid-font
+
+# Podsumowanie ankiety
+
+???
+
+Doświadczenie z pracy znaczy pracowania przez dłuższy czas z typehintami.
+Przykłady z życia wzięte, nie tylko akademickie.
+
+Prawie 50/50 rozkład ankietowanych odnośnie przypadków złapania błędów. Prawie
+wszyscy myślą, bądź wiedzą, że wyłapuje błędy.
+
+Nikt nie odpowiedział, że kod z nimi zawsze wygląda źle.
+
+Z poprawą jakości pisanego kodu prawie połowa nie jest pewna, 1/3 myśli, że poprawia, reszta myśli, że nie poprawia czytelności.
+
+Nie było osób, którym w ogóle się nie podoba format zapisu type hintów.
+
+Nie było osób, którzy uważają, że dodanie type hintów do pythona to ogólnie zły pomysł.
+
+--
+
+- 100% ankietowanych używało type hinty w pracy.
+
+--
+
+- Pomogają wychwytywać błędy.
+
+--
+
+- Mogą poprawiać czytelność kodu, ale to zależy od przypadku.
+
+--
+
+- Mogą wpłynąć na poprawę jakości pisanego kodu.
+
+--
+
+- Format zapisu jest ok, ale mógłby być lepszy.
+
+--
+
+- Dodanie type hintów to dobry pomysł, jednak jest miejsce na poprawę.
+
+---
+
+class: with-title mid-font
+
+# Dlaczego warto używać
+
+--
+
+Opisują jakiego typu argumenty wchodzą i wychodzą z funkcji.
+
+```
+def get_costs(
+    date_from: datetime.date,
+    date_to: datetime.date,
+    types: List[str]=None
+) -> Optional[dict]:
+```
+
+???
+
+Dokumentowanie kodu.
+
+---
+
+class: with-title mid-font
+
+# Dlaczego warto używać
+
+Bardziej czytelny opis niż opisy w docstringach.
+
+```
+def get_costs(
+    date_from: datetime.date,
+    date_to: datetime.date,
+    types: List[str]=None
+) -> Optional[dict]:
+```
+
+```
+def get_costs(date_from, date_to, types=None):
+    """Some fancy oneliner.
+
+    Few lines of description.
+
+    :param datetime.date date_from:
+    :param datetime.date date_to:
+    :param types:
+    :type type: list(str) or None
+    :rtype: dict or None
+    """
+```
+
+???
+
+W docstringach mamy zduplikowane informacje o parametrach (raz w definicji, później w docstringu).
+
+W docstringach informacje o typach są oddalone od parametrów.
+
+Jeżeli funkcje są wystarczająco małe mogą nie potrzebować dosctringów (self documenting code).
+
+Jest kilka formatów do opisania parametrów w docstringach (Sphinx, Goolge).
+
+
+---
+
+class: with-title mid-font
+
+# Dlaczego warto używać
+
+Informacje o type hintach są łatwo dostępne.
+
+```
+def get_costs(
+    date_from: datetime.date,
+    date_to: datetime.date,
+    types: List[str]=None
+) -> Optional[dict]:
+```
+
+```
+typing.get_type_hints(get_costs)
+
+{'date_from': datetime.date,
+ 'date_to': datetime.date,
+ 'return': typing.Union[dict, NoneType],
+ 'types': typing.Union[typing.List[str], NoneType]}
+```
+
+---
+
+class: with-title mid-font
+
+# Dlaczego warto używać
+
+Podpowiadanie w edytorach:
+Vim (vim-mypy), Emacs (Flycheck-mypy), Sublime Text (SublimeLinter-contrib-mypy),
+Atom (linter-mypy), PyCharm.
+
+.center[![IDE 2](/static/img/IDE/pycharm_2.png)]
+
+.center[![IDE 1](/static/img/IDE/pycharm_1.png)]
+
+
+???
+
+Pycharm posida swoją obsługę wyłapywania niezgodności z type hintami. Nie zawsze
+wszystko łapie, mypy wydaje się być lepszy pod tym względem.
+
+---
+
+class: with-title mid-font
+
+# Dlaczego warto używać
+
+Potrafią wychwycić błędy.
+
+```
+def _preprocess_user_services(data, preprocess_resources):
+    services = {}
+    for item in data.get('applications'):
+        service_data = item['application']
+        service = Service(
+            service_data, preprocess_resources=preprocess_resources
+        )
+        services[service['id']] = service
+    return services
+```
+
+---
+
+class: with-title mid-font
+
+# Dlaczego warto używać
+
+Potrafią wychwycić błędy.
+
+```
+def _preprocess_user_services(
+    data: Dict[str, List[Dict[str, Any]]],
+    preprocess_resources: bool
+) -> Dict[str, Any]:
+    services = {}
+    for item in data.get('applications'):
+        service_data = item['application']
+        service = Service(
+            service_data, preprocess_resources=preprocess_resources
+        )
+        services[service['id']] = service
+    return services
+```
+
+---
+
+class: with-title mid-font
+
+# Dlaczego warto używać
+
+Potrafią wychwycić błędy.
+
+```
+def _preprocess_user_services(
+    data: Dict[str, List[Dict[str, Any]]],
+    preprocess_resources: bool
+) -> Dict[str, Any]:
+    services = {}
+*   for item in data.get('applications'):
+        service_data = item['application']
+        service = Service(
+            service_data, preprocess_resources=preprocess_resources
+        )
+        services[service['id']] = service
+    return services
+```
+
+```bash
+error: Iterable expected
+error: Item "None" of "Optional[List[Dict[str, Any]]]" has no attribute "__iter__"
+```
+
+???
+
+Mogą zastąpić część unit testów. Niektóre rzeczy łatwiej wyrazić przez typy
+niż klepać więcej linii kodu w testach.
+
+
+---
+
+class: with-title mid-font
+
+# Gdzie nas boli
+
+???
+
+<b>cast</b> - mypy nie zawsze dobrze rozpoznaje typy
+
+<b>Django</b> - nie jest za dobrze wspierane
+
+<b>JSON</b> - problem z opisem zagnieżdżonych typów danych
+
+Z przypadkiem zacyklenia importów można wykorzystać forward references.
+
+--
+
+- W niektórych przypadkach nie są aż tak łatwe w użyciu, np. cast, Django, JSON.
+
+--
+
+- Brak natywnego wsparcia, trzeba użyć zewnęterznego narzędzia do sprawdzania - mypy.
+
+--
+
+- Czasami trzeba importować dodatkowe zależności, co może prowadzić do zacyklenia importów.
+
+---
+
+class: with-title
+
+# Kilka słów podsumowania
+
+???
+
+Nie zwracać uwagi na hejt i po prostu wypróbować.
+
+Jeżeli odrzuciły cię jakiś czas temu, może warto do nich ponownie zajrzeć.
+Są cały czas rozwijane, również mypy.
+
+Warto spojrzeć na Rejected Alternatives z PEP 484.
+
+U nas lepiej się sprawdziło wymaganie type hintów od początku w projekcie niż
+dodawnie do istniejącego.
+
+Od Pythona 3.6 mamy variable annotations.
+
+---
+
+class: with-title
+
+# Q & A
+
+
     </textarea>
-    <script src="./remark-latest.min.js">
+    <script src="./static/remark-latest.min.js">
     </script>
     <script>
       var slideshow = remark.create({
