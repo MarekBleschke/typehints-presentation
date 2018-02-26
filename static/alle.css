@@ -244,7 +244,8 @@
   font-style: italic;
   font-stretch: normal;
   src: url("fonts/SourcePro/EOT/SourceCodePro-BlackIt.eot") format("embedded-opentype"), url("fonts/SourcePro/WOFF2/TTF/SourceCodePro-BlackIt.ttf.woff2") format("woff2"), url("fonts/SourcePro/WOFF/OTF/SourceCodePro-BlackIt.otf.woff") format("woff"), url("fonts/SourcePro/OTF/SourceCodePro-BlackIt.otf") format("opentype"), url("fonts/SourcePro/TTF/SourceCodePro-BlackIt.ttf") format("truetype"); }
-#slide-survey {
+#slide-survey,
+#slide-summary {
   background-size: cover; }
 
 body {
